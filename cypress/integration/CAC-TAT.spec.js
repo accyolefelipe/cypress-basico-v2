@@ -189,6 +189,27 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         cy.get('#open-text-area')
             .invoke('val', longText)
             .should('have.value', longText);
-    })
+    });
 
-})
+    it('faz uma requisição HTTP', () => {
+       cy.request({
+          method: 'GET',
+          url: 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html' 
+       }).then((response) => {
+           expect(response.status).to.equal(200);
+           expect(response.statusText).to.equal('OK');
+           expect(response.body).to.include('CAC TAT');
+       });
+    });
+
+    it('faz requisição HTTP destrinchando response', () => {
+        cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+        .should((response) => {
+            const {status, statusText, body} = response;
+            expect(status).to.equal(200);
+            expect(statusText).to.equal('OK');
+            expect(body).to.include('CAC TAT');
+        });
+    });
+
+});
