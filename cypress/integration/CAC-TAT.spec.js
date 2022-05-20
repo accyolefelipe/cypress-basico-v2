@@ -90,16 +90,19 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         cy.get('.error').should('not.be.visible');
     });
 
-    it('envia o formuário com sucesso usando um comando customizado', () => {
-        cy.clock();
+    Cypress._.times(5, () => {
+        it('envia o formuário com sucesso usando um comando customizado', () => {
+            cy.clock();
 
-        cy.fillMandatoryFieldsAndSubmit(); 
-        cy.get('.success').should('be.visible');
+            cy.fillMandatoryFieldsAndSubmit();
+            cy.get('.success').should('be.visible');
 
-        cy.tick(THREE_SECONDS_IN_MS);
-        cy.get('.success').should('not.be.visible');
+            cy.tick(THREE_SECONDS_IN_MS);
+            cy.get('.success').should('not.be.visible');
 
+        })
     });
+            
 
     it('seleciona um produto (YouTube) por seu texto', () => {
         cy.get('#product').select('YouTube').should('have.value', 'youtube');
